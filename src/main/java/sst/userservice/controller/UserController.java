@@ -11,6 +11,7 @@ import sst.userservice.model.User;
 import sst.userservice.service.UserService;
 
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController()
@@ -29,7 +30,7 @@ public class UserController   {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createNewUser(@Validated @RequestBody User user){
+    public ResponseEntity<User> createNewUser(@Validated @RequestBody User user) throws SQLIntegrityConstraintViolationException {
         return ResponseEntity.ok(userService.createUser(user));
     }
 

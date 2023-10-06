@@ -1,12 +1,8 @@
 package sst.userservice.model;
 
+import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 
 import java.time.LocalDate;
@@ -18,14 +14,13 @@ public class User {
     @Id
     private long id;
 
-   @Column(name = "user_name",nullable = false)
+    @Column(name = "user_name",nullable = false)
     private String userName;
 
     @Column(name = "first_name",nullable = false)
     private String firstName;
 
     @Column(name = "email",nullable = false)
-    //@Email(message = "Email must be valid, adress@provider.com")
     private String email;
 
     @Column(name = "birth_date",nullable = false)
@@ -37,6 +32,13 @@ public class User {
 
     public User(long id, String userName, String firstName, String email, LocalDate date) {
         this.id = id;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.email = email;
+        this.date = date;
+    }
+
+    public User(String userName, String firstName, String email, LocalDate date) {
         this.userName = userName;
         this.firstName = firstName;
         this.email = email;
@@ -56,6 +58,10 @@ public class User {
         if(user.date != null) {
             this.date = user.date;
         }
+    }
+
+    public boolean complete(){
+        return userName != null && firstName != null && email != null && date != null;
     }
 
     public long getId() {

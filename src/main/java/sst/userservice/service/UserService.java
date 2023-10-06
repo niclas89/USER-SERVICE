@@ -2,6 +2,7 @@ package sst.userservice.service;
 
 import sst.userservice.model.User;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public interface UserService {
@@ -10,7 +11,7 @@ public interface UserService {
 
     User getUser(Long id);
 
-    User createUser(User user);
+    User createUser(User user) throws SQLIntegrityConstraintViolationException;
 
     User updateUser(User user,Long id);
 
