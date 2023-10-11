@@ -58,7 +58,10 @@ public class UserServiceImpl implements UserService{
     public User updateUser(User user,Long id) {
         Optional<User> dbUser = userRepository.findById(id);
         if(dbUser.isPresent()){
-            dbUser.get().update(user);  ;
+            if(validateEmail(user.getEmail())) {
+                dbUser.get().update(user);
+
+            }
             return userRepository.save(dbUser.get());
         }else{
             throw new NoSuchElementException("No user with that id");
