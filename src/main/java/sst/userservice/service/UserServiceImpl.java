@@ -1,6 +1,6 @@
 package sst.userservice.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import sst.userservice.model.User;
 
@@ -76,16 +76,9 @@ public class UserServiceImpl implements UserService{
     }
 
     public boolean validateEmail(String email){
-        String test = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
-        boolean correct = true;
-        System.out.println("Here");
-
         if(!email.startsWith(".")){
-            System.out.println("step1");
             if(email.contains("@")){
-                System.out.println("step2");
                 int start = email.indexOf("@")+1;
-                System.out.println(email.substring(start));
                     for(int i = 0; i< emailList.size(); i++) {
                         if (email.substring(start).equals(emailList.get(i))  ){
                             return true;
@@ -96,7 +89,6 @@ public class UserServiceImpl implements UserService{
         }
         return false;
 
-        //return email.matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$");
 
 
 
