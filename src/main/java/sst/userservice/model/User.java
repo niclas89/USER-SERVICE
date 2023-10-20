@@ -12,7 +12,9 @@ import java.time.LocalDate;
 public class User {
 
     @Id
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id",nullable = false)
+    private long userId;
 
     @Column(name = "user_name",nullable = false)
     private String userName;
@@ -30,8 +32,8 @@ public class User {
     public User() {
     }
 
-    public User(long id, String userName, String firstName, String email, LocalDate date) {
-        this.id = id;
+    public User(long userId, String userName, String firstName, String email, LocalDate date) {
+        this.userId = userId;
         this.userName = userName;
         this.firstName = firstName;
         this.email = email;
@@ -64,12 +66,12 @@ public class User {
         return userName != null && firstName != null && email != null && date != null;
     }
 
-    public long getId() {
-        return id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserId(long id) {
+        this.userId = id;
     }
 
     public String getUserName() {

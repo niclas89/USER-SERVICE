@@ -76,14 +76,14 @@ public class UserServiceTest {
     @Order(3)
     public void test_createUser() throws SQLIntegrityConstraintViolationException {
         User dbUser = user1;
-        dbUser.setId(1);
+        dbUser.setUserId(1);
         User failEmail = new User();
         failEmail.update(user1);
         failEmail.setEmail("testmail@fail.com");
 
         when(userRepository.save(user1)).thenReturn(dbUser);
 
-        assertEquals(1, userService.createUser(user1).getId());
+        assertEquals(1, userService.createUser(user1).getUserId());
         assertThrowsExactly(SQLIntegrityConstraintViolationException.class, () -> userService.createUser(failEmail));
 
     }
