@@ -2,10 +2,12 @@ package sst.userservice.service;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import sst.userservice.model.User;
 
 import sst.userservice.repository.UserRepository;
 
+import java.sql.Array;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,12 @@ public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
 
+
+    private RestTemplate restTemplate = new RestTemplate();
+    String temp = "http://localhost:8080//album-service/api/v1/users/";
+
+
+    private final String [] URLS = {"http://localhost:8080//played-media-service/api/v1/users/","http://localhost:8080//rating-service/api/v1/users/"} ;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -49,7 +57,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public User createUser(User user) throws SQLIntegrityConstraintViolationException {
         if(validateEmail(user.getEmail())) {
-            return userRepository.save(user);
+            User createdUser = userRepository.save(user);
+            notifyServices(createdUser,URLS);
+            return createdUser;
         }
         throw new SQLIntegrityConstraintViolationException("!email");
     }
@@ -94,6 +104,20 @@ public class UserServiceImpl implements UserService{
 
 
 
+
+    }
+
+    public void notifyServices(User user,String [] URLS){
+        System.out.println("In notifyServices");
+        for(int i = 0; i<URLS.length; i++) {
+            try {
+                System.out.println(URLS[i]);
+                restTemplate.postForLocation(URLS[i], user);
+
+            } catch (Exception exc) {
+              exc.printStackTrace();
+            }
+        }
 
     }
 }

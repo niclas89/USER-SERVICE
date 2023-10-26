@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.client.RestTemplate;
 import sst.userservice.model.User;
 import sst.userservice.service.UserService;
 
@@ -23,6 +24,8 @@ public class UserController   {
 
     @Autowired
     UserService userService;
+
+    RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUser(){
@@ -49,5 +52,7 @@ public class UserController   {
     public ResponseEntity<Boolean> deletedUser(@PathVariable Long id){
         return ResponseEntity.ok(userService.deleteUser(id));
     }
+
+
 
 }

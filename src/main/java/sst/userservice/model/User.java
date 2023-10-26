@@ -1,5 +1,6 @@
 package sst.userservice.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id",nullable = false)
     private long userId;
 
@@ -24,6 +25,7 @@ public class User {
 
     @Column(name = "email",nullable = false)
     private String email;
+
 
     @Column(name = "birth_date",nullable = false)
     @DateTimeFormat(pattern = "yyyy/mm/dd")
